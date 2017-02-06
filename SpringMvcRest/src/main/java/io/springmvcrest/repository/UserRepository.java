@@ -10,4 +10,6 @@ public interface UserRepository {
 
 	void deleteUser(String userId);
 
+	User findUserById(String userId);
+
 }

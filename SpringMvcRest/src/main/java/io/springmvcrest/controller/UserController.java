@@ -1,7 +1,5 @@
 package io.springmvcrest.controller;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,5 +35,10 @@ public class UserController {
 	public void deleteUser(@PathVariable(value="id") String userId){
 		
 		userService.deleteUser(userId);
+	}
+	@RequestMapping(path = "{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public User findUser(@PathVariable(value = "id") String userId){
+		User existingUser = userService.findUserById(userId);
+		return existingUser;
 	}
 }
