@@ -23,4 +23,20 @@ public class UserRepositoryImpl implements UserRepository{
 		return user;
 	}
 
+	@Override
+	public void deleteUser(String userId) {
+		System.out.println(userId);
+		User eixistingUser = getUserById(userId);
+		if(eixistingUser != null){
+			em.remove(eixistingUser);
+		}
+	}
+		
+
+	public User getUserById(String userId) {
+		
+		User getUser = em.find(User.class,userId );
+		return getUser;
+	}
+
 }

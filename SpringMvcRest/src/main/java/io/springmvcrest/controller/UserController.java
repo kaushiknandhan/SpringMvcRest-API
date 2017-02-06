@@ -4,6 +4,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,8 +28,14 @@ public class UserController {
 		return createdUser;
 	}
 	@RequestMapping(path = "{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public User updateUser(@PathParam(value="id") String userId, @RequestBody User user){
+	public User updateUser(@PathVariable(value="id") String userId, @RequestBody User user){
 		User updatedUser = userService.updateUser(userId, user); 
 		return updatedUser;
+	}
+	
+	@RequestMapping(path="{id}",method = RequestMethod.DELETE)
+	public void deleteUser(@PathVariable(value="id") String userId){
+		
+		userService.deleteUser(userId);
 	}
 }

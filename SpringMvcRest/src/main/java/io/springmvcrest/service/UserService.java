@@ -8,4 +8,6 @@ public interface UserService {
 
 	User updateUser(String userId, User user);
 
+	void deleteUser(String userId);
+
 }
