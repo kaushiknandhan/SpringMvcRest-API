@@ -1,5 +1,7 @@
 package io.springmvcrest.controller;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,5 +25,10 @@ public class UserController {
 		User createdUser = userService.createUser(user);
 		
 		return createdUser;
+	}
+	@RequestMapping(path = "{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public User updateUser(@PathParam(value="id") String userId, @RequestBody User user){
+		User updatedUser = userService.updateUser(userId, user); 
+		return updatedUser;
 	}
 }

@@ -6,4 +6,6 @@ public interface UserRepository {
 
 	User createUser(User user);
 
+	User updateUser(String userId, User user);
+
 }

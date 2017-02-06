@@ -17,4 +17,10 @@ public class UserRepositoryImpl implements UserRepository{
 		return user;
 	}
 
+	@Override
+	public User updateUser(String userId, User user) {
+		em.merge(user);
+		return user;
+	}
+
 }
