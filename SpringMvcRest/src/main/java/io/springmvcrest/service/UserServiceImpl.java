@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.springmvcrest.entity.User;
+import io.springmvcrest.exception.NoUserPresent;
+import io.springmvcrest.exception.UserAlreadyExists;
 import io.springmvcrest.repository.UserRepository;
 
 @Service
@@ -15,26 +17,49 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
 	@Override
 	public User createUser(User user) {
+		User existingUser = userRepository.findUserBYEmail(user);
+		if(existingUser == null){
+			User createdUser = userRepository.createUser(user);
+			return createdUser;
+		}
+		else{
+			throw new UserAlreadyExists("User already present with emailId");
+		}
 		
-		User createdUser = userRepository.createUser(user);
-		return createdUser;
 	}
 	@Override
 	public User updateUser(String userId, User user) {
-		User updatedUser = userRepository.updateUser(userId, user);
-		return updatedUser;
+		User existingUser = userRepository.findUserById(userId);
+		if(existingUser != null){
+			User updatedUser = userRepository.updateUser(userId, user);
+			return updatedUser;
+		}	else{
+			throw new NoUserPresent("No user present with the given id"+userId);
+		}
+		
 	}
 	@Override
 	public void deleteUser(String userId) {
+		User existingUser = userRepository.findUserById(userId);
+		if(existingUser != null){
+			userRepository.deleteUser(userId);
+		}	else{
+			throw new NoUserPresent("No user present with the given id"+userId);
+		}
 		
-		userRepository.deleteUser(userId);
 	}
 	@Override
 	public User findUserById(String userId) {
 		User existingUser = userRepository.findUserById(userId);
-		return existingUser;
+		if(existingUser != null){
+			return existingUser;
+		}	else{
+			throw new NoUserPresent("No user present with the given id"+userId);
+		}
+		
 
 	}
 	@Override

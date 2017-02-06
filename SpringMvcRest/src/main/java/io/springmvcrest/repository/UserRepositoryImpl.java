@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import io.springmvcrest.entity.User;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository{
-	
+public class UserRepositoryImpl implements UserRepository {
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -31,26 +31,32 @@ public class UserRepositoryImpl implements UserRepository{
 	public void deleteUser(String userId) {
 		System.out.println(userId);
 		User eixistingUser = findUserById(userId);
-		if(eixistingUser != null){
+		if (eixistingUser != null) {
 			em.remove(eixistingUser);
 		}
 	}
-		
 
 	public User findUserById(String userId) {
-		
-		User getUser = em.find(User.class,userId );
+
+		User getUser = em.find(User.class, userId);
 		return getUser;
 	}
 
 	@Override
 	public List<User> findAllUsers() {
-		TypedQuery<User> query = em.createQuery("SELECT u FROM User u order by userName ASC",User.class);
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u order by userName ASC", User.class);
 		List<User> existingUserList = query.getResultList();
 		return existingUserList;
-		
+
 	}
 
-	
+	@Override
+	public User findUserBYEmail(User user) {
+		// TODO Auto-generated method stub
+		TypedQuery<User> query = em.createQuery("SELECT u from User u where u.emailId = :pemail",User.class);
+		query.setParameter("pemail", user.getEmailId());
+		User existingUser = query.getSingleResult();
+		return existingUser;
+	}
 
 }
