@@ -24,13 +24,14 @@ public class JPAConfig {
 	private Environment env;
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource());
 		emf.setPackagesToScan(new String[] {"io.springmvcrest.entity"});
-		emf.setJpaProperties(jpaProperties());
+		
 		JpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		emf.setJpaVendorAdapter(adapter);
+		emf.setJpaProperties(jpaProperties());
 		return emf;
 	}
 
@@ -48,12 +49,13 @@ public class JPAConfig {
 	public  DataSource dataSource() {
 		
 	DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	dataSource.setDriverClassName("com.mysql.jdbc.driver");
+	dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 	dataSource.setUrl(env.getProperty("db.url"));
 	dataSource.setUsername(env.getProperty("db.username"));
 	dataSource.setPassword(env.getProperty("db.password"));
 		return dataSource;
 	}
+	
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
