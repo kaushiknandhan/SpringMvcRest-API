@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	public User createUser(User user) {
 		
 		User createdUser = userRepository.createUser(user);
-		return null;
+		return createdUser;
 	}
 
 }

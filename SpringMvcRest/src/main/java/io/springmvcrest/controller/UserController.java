@@ -22,6 +22,6 @@ public class UserController {
 	
 		User createdUser = userService.createUser(user);
 		
-		return null;
+		return createdUser;
 	}
 }
