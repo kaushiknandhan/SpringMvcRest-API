@@ -1,7 +1,11 @@
 package io.springmvcrest.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
 import org.springframework.stereotype.Repository;
 import io.springmvcrest.entity.User;
 
@@ -37,6 +41,14 @@ public class UserRepositoryImpl implements UserRepository{
 		
 		User getUser = em.find(User.class,userId );
 		return getUser;
+	}
+
+	@Override
+	public List<User> findAllUsers() {
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u order by userName ASC",User.class);
+		List<User> existingUserList = query.getResultList();
+		return existingUserList;
+		
 	}
 
 	

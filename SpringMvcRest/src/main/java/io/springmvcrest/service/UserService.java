@@ -1,5 +1,7 @@
 package io.springmvcrest.service;
 
+import java.util.List;
+
 import io.springmvcrest.entity.User;
 
 public interface UserService {
@@ -11,5 +13,7 @@ public interface UserService {
 	void deleteUser(String userId);
 
 	User findUserById(String userId);
+
+	List<User> findAllUsers();
 
 }

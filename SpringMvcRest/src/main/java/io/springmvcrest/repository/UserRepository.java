@@ -1,5 +1,7 @@
 package io.springmvcrest.repository;
 
+import java.util.List;
+
 import io.springmvcrest.entity.User;
 
 public interface UserRepository {
@@ -11,5 +13,7 @@ public interface UserRepository {
 	void deleteUser(String userId);
 
 	User findUserById(String userId);
+
+	List<User> findAllUsers();
 
 }
