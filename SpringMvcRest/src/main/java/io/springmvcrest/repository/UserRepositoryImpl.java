@@ -52,11 +52,14 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public User findUserBYEmail(User user) {
-		// TODO Auto-generated method stub
-		TypedQuery<User> query = em.createQuery("SELECT u from User u where u.emailId = :pemail",User.class);
+		TypedQuery<User> query = em.createQuery("SELECT u from User u where u.emailId = :pemail", User.class);
 		query.setParameter("pemail", user.getEmailId());
-		User existingUser = query.getSingleResult();
-		return existingUser;
+		List<User> existingUserList = query.getResultList();
+		if (existingUserList.isEmpty()) {
+			return null;
+		} else {
+			return existingUserList.get(0);
+		}
 	}
 
 }
