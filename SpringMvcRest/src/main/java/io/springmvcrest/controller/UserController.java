@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.springmvcrest.entity.User;
+import io.springmvcrest.exception.NoUserPresent;
+import io.springmvcrest.exception.UserAlreadyExists;
 import io.springmvcrest.service.UserService;
 
 @RestController
@@ -21,26 +23,26 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public User createUser(@RequestBody User user) {
+	public User createUser(@RequestBody User user) throws UserAlreadyExists {
 
 		User createdUser = userService.createUser(user);
 		return createdUser;
 	}
 
 	@RequestMapping(path = "{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public User updateUser(@PathVariable(value = "id") String userId, @RequestBody User user) {
+	public User updateUser(@PathVariable(value = "id") String userId, @RequestBody User user) throws NoUserPresent {
 		User updatedUser = userService.updateUser(userId, user);
 		return updatedUser;
 	}
 
 	@RequestMapping(path = "{id}", method = RequestMethod.DELETE)
-	public void deleteUser(@PathVariable(value = "id") String userId) {
+	public void deleteUser(@PathVariable(value = "id") String userId) throws NoUserPresent {
 
 		userService.deleteUser(userId);
 	}
 
 	@RequestMapping(path = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public User findUser(@PathVariable(value = "id") String userId) {
+	public User findUser(@PathVariable(value = "id") String userId) throws NoUserPresent {
 		User existingUser = userService.findUserById(userId);
 		return existingUser;
 	}

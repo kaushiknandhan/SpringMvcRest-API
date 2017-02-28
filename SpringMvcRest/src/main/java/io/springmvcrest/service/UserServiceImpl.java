@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	
 	@Override
-	public User createUser(User user) {
+	public User createUser(User user) throws UserAlreadyExists {
 		User existingUser = userRepository.findUserBYEmail(user);
 		if(existingUser == null){
 			User createdUser = userRepository.createUser(user);
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	@Override
-	public User updateUser(String userId, User user) {
+	public User updateUser(String userId, User user) throws NoUserPresent {
 		User existingUser = userRepository.findUserById(userId);
 		if(existingUser != null){
 			User updatedUser = userRepository.updateUser(userId, user);
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	@Override
-	public void deleteUser(String userId) {
+	public void deleteUser(String userId) throws NoUserPresent {
 		User existingUser = userRepository.findUserById(userId);
 		if(existingUser != null){
 			userRepository.deleteUser(userId);
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	@Override
-	public User findUserById(String userId) {
+	public User findUserById(String userId) throws NoUserPresent {
 		User existingUser = userRepository.findUserById(userId);
 		if(existingUser != null){
 			return existingUser;
